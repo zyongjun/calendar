@@ -1,6 +1,7 @@
 package com.windhike.calendar.adapter;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 
 /**
@@ -31,10 +32,4 @@ public class CalendarBaseAdpter extends PagerAdapter {
         return false;
     }
 
-    public interface CalendarUpdateListener{
-        void onDateSelected();
-        void onPageNextSelected();
-        void onPagePreviousSelected();
-        void updateSelectRow(int row);
-    }
 }

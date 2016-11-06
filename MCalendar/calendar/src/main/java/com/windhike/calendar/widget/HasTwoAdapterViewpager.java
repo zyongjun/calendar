@@ -5,9 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
-
-import com.windhike.calendar.utils.RefreshListener;
-
+import com.windhike.calendar.utils.CalendarUpdateListener;
 import java.lang.reflect.Field;
 
 /**
@@ -24,9 +22,9 @@ public class HasTwoAdapterViewpager extends ViewPager {
 //        setViewPagerScrollSpeed( );
     }
 
-    private RefreshListener listener;
+    private CalendarUpdateListener listener;
 
-    public void setListener(RefreshListener listener) {
+    public void setListener(CalendarUpdateListener listener) {
         this.listener = listener;
     }
 
@@ -36,7 +34,7 @@ public class HasTwoAdapterViewpager extends ViewPager {
         //刷新，滚动到相应的位置
         if (visibility==VISIBLE){//在viewpager显示前，刷新
             if (listener!=null){
-                listener.refreshListener(HasTwoAdapterViewpager.this);
+                listener.refreshCalendar(HasTwoAdapterViewpager.this);
             }
         }
     }

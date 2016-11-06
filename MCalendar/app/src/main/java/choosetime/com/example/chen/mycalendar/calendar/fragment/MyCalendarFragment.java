@@ -12,23 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-
-import com.windhike.calendar.adapter.CalendarBaseAdpter;
 import com.windhike.calendar.adapter.MonthCalendarAdpter;
 import com.windhike.calendar.adapter.WeekCalendarAdpter;
+import com.windhike.calendar.utils.CalendarUpdateListener;
 import com.windhike.calendar.utils.DateUtils;
-import com.windhike.calendar.utils.RefreshListener;
 import com.windhike.calendar.widget.HandMoveLayout;
 import com.windhike.calendar.widget.HasTwoAdapterViewpager;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import choosetime.com.example.chen.mycalendar.R;
 
 
-public class MyCalendarFragment extends Fragment implements RefreshListener {
+public class MyCalendarFragment extends Fragment {
     private Button btnSwitch;
 
     public MyCalendarFragment() {
@@ -75,8 +72,8 @@ public class MyCalendarFragment extends Fragment implements RefreshListener {
         viewPager = (HasTwoAdapterViewpager) getView().findViewById(R.id.calendar_viewpager);
         viewpagerWeek = (HasTwoAdapterViewpager) getView().findViewById(R.id.calendar_viewpager_week);
 
-        viewPager.setListener(this);
-        viewpagerWeek.setListener(this);
+        viewPager.setListener(updateListener);
+        viewpagerWeek.setListener(updateListener);
 
         //制造月视图所需view
         views = new ArrayList<>();
@@ -170,7 +167,7 @@ public class MyCalendarFragment extends Fragment implements RefreshListener {
 
     private MonthCalendarAdpter adpter;
 
-    private CalendarBaseAdpter.CalendarUpdateListener updateListener = new CalendarBaseAdpter.CalendarUpdateListener() {
+    private CalendarUpdateListener updateListener = new CalendarUpdateListener() {
         @Override
         public void onDateSelected() {
 
@@ -194,50 +191,50 @@ public class MyCalendarFragment extends Fragment implements RefreshListener {
         public void updateSelectRow(int row) {
             handMoveLayout.setRowNum(row);
         }
+
+        @Override
+        public void refreshCalendar(ViewPager viewPager) {
+            //得到这个selecttime对应的currentItem
+            currentItem = 0;
+            if (viewPager.getAdapter() instanceof MonthCalendarAdpter) {
+                adpter.getTimeList(timeList);
+                //月视图
+                currentItem = adpter.getMonthCurrentItem();
+                int odl = viewPager.getCurrentItem();
+                viewPager.setCurrentItem(currentItem, false);
+                //刷新已经存在的3个视图view
+                if (Math.abs(odl - currentItem) <= 1) {
+                    adpter.instantiateItem(viewPager, viewPager.getCurrentItem() - 1);
+
+                    adpter.instantiateItem(viewPager, viewPager.getCurrentItem());
+
+                    adpter.instantiateItem(viewPager, viewPager.getCurrentItem() + 1);
+                }
+                adpter.notifyDataSetChanged();
+            } else {
+                //周视图
+                currentItem = weekCalendarAdpter.getWeekCurrentItem();
+                //如果是周日，就是下一周，+1
+                Log.e("tttttt", "refreshCalendar: -----------"+DateUtils.stringToDate(adpter.getSelectTime()),null);
+                if (DateUtils.getWeekStr(DateUtils.stringToDate(adpter.getSelectTime())).equals("星期日")) {
+                    currentItem++;
+                }
+                weekCalendarAdpter.getTimeList(timeList);
+                int odl = viewPager.getCurrentItem();
+                viewPager.setCurrentItem(currentItem, false);
+                //刷新已经存在的3个视图view
+                if (Math.abs(odl - currentItem) <= 1) {
+                    weekCalendarAdpter.instantiateItem(viewPager, viewPager.getCurrentItem() - 1);
+
+                    weekCalendarAdpter.instantiateItem(viewPager, viewPager.getCurrentItem());
+
+                    weekCalendarAdpter.instantiateItem(viewPager, viewPager.getCurrentItem() + 1);
+                }
+                weekCalendarAdpter.notifyDataSetChanged();
+            }
+        }
     };
 
     int currentItem = 0;
-    @Override
-    public void refreshListener(final ViewPager viewPager) {
-//        ToastUtils.shortMsg("刷新");
-        //得到这个selecttime对应的currentItem
-        currentItem = 0;
-        if (viewPager.getAdapter() instanceof MonthCalendarAdpter) {
-            adpter.getTimeList(timeList);
-            //月视图
-            currentItem = adpter.getMonthCurrentItem();
-            int odl = viewPager.getCurrentItem();
-            viewPager.setCurrentItem(currentItem, false);
-            //刷新已经存在的3个视图view
-            if (Math.abs(odl - currentItem) <= 1) {
-                adpter.instantiateItem(viewPager, viewPager.getCurrentItem() - 1);
-
-                adpter.instantiateItem(viewPager, viewPager.getCurrentItem());
-
-                adpter.instantiateItem(viewPager, viewPager.getCurrentItem() + 1);
-            }
-            adpter.notifyDataSetChanged();
-        } else {
-            //周视图
-            currentItem = weekCalendarAdpter.getWeekCurrentItem();
-            //如果是周日，就是下一周，+1
-            if (DateUtils.getWeekStr(DateUtils.stringToDate(adpter.getSelectTime())).equals("星期日")) {
-                currentItem++;
-            }
-            weekCalendarAdpter.getTimeList(timeList);
-            int odl = viewPager.getCurrentItem();
-            viewPager.setCurrentItem(currentItem, false);
-            //刷新已经存在的3个视图view
-            if (Math.abs(odl - currentItem) <= 1) {
-                weekCalendarAdpter.instantiateItem(viewPager, viewPager.getCurrentItem() - 1);
-
-                weekCalendarAdpter.instantiateItem(viewPager, viewPager.getCurrentItem());
-
-                weekCalendarAdpter.instantiateItem(viewPager, viewPager.getCurrentItem() + 1);
-            }
-            weekCalendarAdpter.notifyDataSetChanged();
-        }
-
-    }
 
 }
