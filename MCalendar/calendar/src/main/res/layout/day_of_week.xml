@@ -6,12 +6,6 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical">
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textColor="@color/black_deep"-->
-    <!--android:text="日"-->
-    <!--/>-->
     <LinearLayout
         android:id="@+id/cal_container"
         android:layout_width="40dp"

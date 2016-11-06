@@ -1,8 +1,9 @@
 package com.windhike.calendar.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import com.windhike.calendar.utils.CalendarUtil;
 import com.windhike.calendar.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
     private List<View> views;
     private Context context;
 
-    private Handler os = null;
+    private CalendarUpdateListener os = null;
 
     private Drawable yuanOfRed;
     private Drawable white;
@@ -44,17 +46,19 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
         strToday = DateUtils.getTagTimeStr(today);
 
         selectTime = DateUtils.getTagTimeStr(today);
-        last_msg_tv_color = context.getResources().getColor(R.color.last_msg_tv_color);
-        text_black = context.getResources().getColor(R.color.black_deep);
-        text_white = context.getResources().getColor(R.color.white);
-        yuanOfRed = context.getResources().getDrawable(R.drawable.yuan);
-        yuanOfBlack = context.getResources().getDrawable(R.drawable.calendar_background);
-        white = context.getResources().getDrawable(R.drawable.white);
+        Resources res = context.getResources();
+        last_msg_tv_color = ResourcesCompat.getColor(res,R.color.last_msg_tv_color,null);
+        text_black = ResourcesCompat.getColor(res,R.color.black_deep,null);
+        text_white = ResourcesCompat.getColor(res,R.color.white,null);
+        yuanOfRed = ResourcesCompat.getDrawable(res,R.drawable.yuan,null);
+        yuanOfBlack = ResourcesCompat.getDrawable(res,R.drawable.calendar_background,null);
+        white = ResourcesCompat.getDrawable(res,R.drawable.white,null);
     }
 
-    public void setHandler(Handler os) {
+    public void setUpdateListener(CalendarUpdateListener os) {
         this.os = os;
     }
+
 
     @Override
     public int getCount() {
@@ -138,7 +142,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
                     is = true;
                     //TODO:发消息，告诉Activity我改变选中的日期了
                     if (WeekCalendarAdpter.this.os != null) {
-//                        os.sendEmptyMessage(MyCalendarFragment.change);
+                        os.onDateSelected();
                     }
                     selectTime = dayOfWeek.getTag().toString();
                     today.add(Calendar.DATE, -7);//因为已经渲染过7天，所以today往前推7天， 代表当前page重绘；
@@ -148,12 +152,8 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
                     ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_white);
                     ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(text_white);
 
-//                    Animator anim = AnimatorInflater.loadAnimator(context, R.anim.soufang);
-
                     //显示的调用invalidate
                     dayOfWeek.invalidate();
-//                    anim.setTarget(dayOfWeek);
-//                    anim.start();
                     //添加监听：动画开始时，恢复上个选中的day的状态，结束时执行刷新方法;
 
                     //将上一个选中的day的状态恢复
@@ -175,29 +175,6 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
                     render(view, today);
                     is = false;
-
-//                    anim.addListener(new Animator.AnimatorListener() {
-//                        @Override
-//                        public void onAnimationStart(Animator animation) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            render(view, today);
-//                            is = false;
-//                        }
-//
-//                        @Override
-//                        public void onAnimationCancel(Animator animation) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onAnimationRepeat(Animator animation) {
-//
-//                        }
-//                    });
 
                 }
             });
@@ -248,6 +225,38 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
     public void setSelectTime(String selectTime) {
         this.selectTime = selectTime;
+    }
+
+    //得到周视图选中日期后的CurrentItem
+    public int getWeekCurrentItem() {
+        //此刻
+        Calendar today = new GregorianCalendar();
+        today.setTimeInMillis(System.currentTimeMillis());
+        //转为本周一
+        int day_of_week = today.get(Calendar.DAY_OF_WEEK) - 1;
+        if (day_of_week == 0) {
+            day_of_week = 7;
+        }
+        today.add(Calendar.DATE, -day_of_week);
+        //选中时间
+        String time = this.getSelectTime();
+        Date date = DateUtils.stringToDate(time);
+        Calendar sele = new GregorianCalendar();
+        sele.setTimeInMillis(date.getTime());
+
+        //选中时间的(day of yeay)-此刻(day of yeay)=天数
+        int aa = ((int) (sele.getTime().getTime() / 1000) - (int) (today.getTime().getTime() / 1000)) / 3600 / 24;
+        int aa2 = 0;
+        if (Math.abs(aa) % 7 == 0) {
+            aa2 = Math.abs(aa) / 7;
+        } else {
+            aa2 = Math.abs(aa) / 7;
+        }
+        if (aa >= 0) {
+            return this.getCount() / 2 + aa2;
+        } else {
+            return this.getCount() / 2 - aa2 - 1;
+        }
     }
 
 }

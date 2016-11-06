@@ -30,4 +30,11 @@ public class CalendarBaseAdpter extends PagerAdapter {
     public boolean isViewFromObject(View view, Object object) {//无所谓
         return false;
     }
+
+    public interface CalendarUpdateListener{
+        void onDateSelected();
+        void onPageNextSelected();
+        void onPagePreviousSelected();
+        void updateSelectRow(int row);
+    }
 }
