@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="ll_no_data" type="id"/>
+    <item name="tag_calendar" type="id"/>
 </resources>

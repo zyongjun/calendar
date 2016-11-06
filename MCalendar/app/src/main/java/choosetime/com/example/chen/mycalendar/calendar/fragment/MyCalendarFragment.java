@@ -166,11 +166,11 @@ public class MyCalendarFragment extends Fragment {
     }
 
     private MonthCalendarAdpter adpter;
-
+    private static final String TAG = "MyCalendarFragment";
     private CalendarUpdateListener updateListener = new CalendarUpdateListener() {
         @Override
-        public void onDateSelected() {
-
+        public void onDateSelected(Calendar calendar) {
+            Log.e(TAG, "onDateSelected: -----"+calendar.get(Calendar.DAY_OF_MONTH), null);
         }
 
         @Override

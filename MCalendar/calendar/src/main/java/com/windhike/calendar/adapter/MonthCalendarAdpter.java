@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -121,6 +122,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
         render(view, today);
     }
 
+    private static final String TAG = "MonthCalendarAdpter";
     /**
      * 渲染page中的view：7天
      */
@@ -154,17 +156,20 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                     ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setVisibility(View.INVISIBLE);
                 }
                 dayOfWeek.setTag(DateUtils.getTagTimeStr(today));
-
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(today.getTimeInMillis());
+                dayOfWeek.setTag(R.id.tag_calendar,calendar);
                 dayOfWeek.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         is = true;
                         //TODO:发消息，告诉Activity我改变选中的日期了
                         if (MonthCalendarAdpter.this.os != null) {
-                            os.onDateSelected();
+                            os.onDateSelected((Calendar) v.getTag(R.id.tag_calendar));
                         }
 
                         selectTime = dayOfWeek.getTag().toString();
+                        Log.e(TAG, "onClick: ---------"+selectTime, null);
                         today.add(Calendar.DATE, -42);//因为已经渲染过42天，所以today往前推42天， 代表当前page重绘；
 
                         //

@@ -136,14 +136,16 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
             ((TextView) dayOfWeek.findViewById(R.id.nongli)).setText(str);
 
             dayOfWeek.setTag(DateUtils.getTagTimeStr(today));
-
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(today.getTimeInMillis());
+            dayOfWeek.setTag(R.id.tag_calendar,calendar);
             dayOfWeek.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     is = true;
                     //TODO:发消息，告诉Activity我改变选中的日期了
                     if (WeekCalendarAdpter.this.os != null) {
-                        os.onDateSelected();
+                        os.onDateSelected((Calendar) v.getTag(R.id.tag_calendar));
                     }
                     selectTime = dayOfWeek.getTag().toString();
                     today.add(Calendar.DATE, -7);//因为已经渲染过7天，所以today往前推7天， 代表当前page重绘；
