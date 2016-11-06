@@ -461,6 +461,36 @@ public class HandMoveLayout extends LinearLayout {
         }.start();
     }
 
+    public void expand() {
+//        smoothExpand(MomentsUtils.dip2px(getContext(), 250));
+        post(new Runnable() {
+            public void run() {
+                Log.e("dd", "scrollCountY ==" + scrollCountY);
+                if(monthViewpager.getVisibility()!=VISIBLE) {
+                    monthViewpager.setVisibility(VISIBLE);
+                    weekviewpager.setVisibility(GONE);
+                }
+//                if (scrollCountY >= 0 && scrollCountY <= hideTop) {
+//                    mHeader.scrollTo(mHeader.getScrollX(), scrollCountY);
+//                } else {
+                    mHeader.scrollTo(mHeader.getScrollX(), 0);
+//                }
+                LayoutParams params2 = (LayoutParams) mContent.getLayoutParams();
+                params2.setMargins(0, 0, 0, 0);
+                mContent.setLayoutParams(params2);
+
+            }
+        });
+    }
+
+    public void toogle() {
+        if (monthViewpager.getVisibility() != VISIBLE) {
+            expand();
+        } else {
+            collapse();
+        }
+    }
+
     public void collapse() {
         post(new Runnable() {
             public void run() {

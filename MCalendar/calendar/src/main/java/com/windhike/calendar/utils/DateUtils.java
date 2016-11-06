@@ -198,31 +198,59 @@ public class DateUtils {
     }
 
     public static String getWeekStr(Date date) {
-        String str = "";
-        str = getWeek(date);
-        if ("1".equals(str)) {
-            str = "星期日";
-        } else if ("2".equals(str)) {
-            str = "星期一";
-        } else if ("3".equals(str)) {
-            str = "星期二";
-        } else if ("4".equals(str)) {
-            str = "星期三";
-        } else if ("5".equals(str)) {
-            str = "星期四";
-        } else if ("6".equals(str)) {
-            str = "星期五";
-        } else if ("7".equals(str)) {
-            str = "星期六";
+        return getWeekStr(getWeek(date));
+    }
+
+    public static String getWeekStr(String week) {
+        if ("1".equals(week)) {
+            week = "星期日";
+        } else if ("2".equals(week)) {
+            week = "星期一";
+        } else if ("3".equals(week)) {
+            week = "星期二";
+        } else if ("4".equals(week)) {
+            week = "星期三";
+        } else if ("5".equals(week)) {
+            week = "星期四";
+        } else if ("6".equals(week)) {
+            week = "星期五";
+        } else if ("7".equals(week)) {
+            week = "星期六";
         }
-        return str;
+        return null;
+    }
+
+    public static String getWeekStr(int weekday) {
+        String result = null;
+        switch (weekday) {
+            case 1:
+                result = "星期日";
+                break;
+            case 2:
+                result = "星期一";
+                break;
+            case 3:
+                result = "星期二";
+                break;
+            case 4:
+                result = "星期三";
+                break;
+            case 5:
+                result = "星期四";
+                break;
+            case 6:
+                result = "星期五";
+                break;
+            case 7:
+                result = "星期六";
+                break;
+        }
+        return result;
     }
 
     public static String getTimestampStr() {
         return Long.toString(System.currentTimeMillis());
     }
-
-
 
     public static boolean isCanBack(long millis) {
         long diff = (new Date().getTime()) - millis;
@@ -234,6 +262,5 @@ public class DateUtils {
             return false;
         }
     }
-
-
+    
 }

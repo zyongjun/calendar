@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.windhike.calendar.adapter.CalendarBaseAdpter;
@@ -28,7 +29,7 @@ import choosetime.com.example.chen.mycalendar.R;
 
 
 public class MyCalendarFragment extends Fragment implements RefreshListener {
-    public static final int back_code = 121;
+    private Button btnSwitch;
 
     public MyCalendarFragment() {
         super();
@@ -54,7 +55,15 @@ public class MyCalendarFragment extends Fragment implements RefreshListener {
         handMoveLayout = (HandMoveLayout) getView().findViewById(R.id.handmovelayout);
 
         initCalendar();
-
+        btnSwitch = (Button)getView().findViewById(R.id.btn_switch);
+        btnSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                handMoveLayout.expand();
+//                handMoveLayout.collapse();
+                handMoveLayout.toogle();
+            }
+        });
 
     }
     private HasTwoAdapterViewpager viewPager;
