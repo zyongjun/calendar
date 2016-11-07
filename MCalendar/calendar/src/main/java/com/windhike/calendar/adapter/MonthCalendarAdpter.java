@@ -176,29 +176,18 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                         //恢复上个选中的day的状态
                         if (day != null) {
                             day.findViewById(R.id.cal_container).setActivated(false);
-//                            day.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-//                            ((TextView) day.findViewById(R.id.gongli)).setTextColor(text_black);
                             //特殊情况
                             if (strToDay.equals(tag)) {
                                 day.findViewById(R.id.cal_container).setActivated(true);
                                 day.findViewById(R.id.cal_container).setSelected(false);
-//                                day.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfBlack);
-//                                ((TextView) day.findViewById(R.id.gongli)).setTextColor(text_black);
-//                                ((TextView) day.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
 
                             } else {
                                 day.findViewById(R.id.cal_container).setActivated(false);
-//                                day.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-//                                ((TextView) day.findViewById(R.id.gongli)).setTextColor(text_black);
-//                                ((TextView) day.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
                             }
                         }
                         //变为红色
                         dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
                         dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
-//                        dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfRed);
-//                        ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_white);
-//                        ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(text_white);
                         //显示的调用invalidate
                         dayOfWeek.invalidate();
                         //  添加监听：动画结束时执行刷新方法;
@@ -209,24 +198,17 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                 if (strToDay.equals(DateUtils.getTagTimeStr(today))) {
                     dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
                     dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
-//                    dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfBlack);
-//                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_black);
-//                    ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
                     if (!selectTime.equals(strToDay)) {
                         today.add(Calendar.DATE, 1);
                         continue;
                     }
                 } else {
                     dayOfWeek.findViewById(R.id.cal_container).setActivated(false);
-//                    dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-//                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_black);
                 }
                 //不是当前月的显示为灰色
                 if (today.get(Calendar.MONTH) != (Integer.parseInt((String) view1.getTag()))) {
                     ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(last_msg_tv_color);
                     ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
-//                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setActivated(true);
-//                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setEnabled(false);
                     if ((Integer.parseInt((String) view1.getTag())) > today.get(Calendar.MONTH)) {
                         //下个月
                         dayOfWeek.setOnClickListener(lastLister);
@@ -245,15 +227,9 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                 if (selectTime.equals(DateUtils.getTagTimeStr(today))) {
                     dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
                     dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
-//                    dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfRed);
-//                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_white);
-//                    ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(text_white);
 
                     if (strToDay.equals(DateUtils.getTagTimeStr(today))) {
                         dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
-//                        dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfRed);
-//                        ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_white);
-//                        ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(text_white);
                     }
 
                     day = dayOfWeek;
@@ -263,9 +239,6 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                     tag = selectTime;
                 } else {
                     dayOfWeek.findViewById(R.id.cal_container).setActivated(false);
-//                    dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-//                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_black);
-//                    ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
                 }
                 today.add(Calendar.DATE, 1);
             }
