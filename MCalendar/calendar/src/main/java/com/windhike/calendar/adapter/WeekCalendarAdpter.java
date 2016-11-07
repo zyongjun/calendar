@@ -27,12 +27,6 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
     private CalendarUpdateListener os = null;
 
-    private Drawable yuanOfRed;
-    private Drawable white;
-    private int text_black;
-    private int last_msg_tv_color;
-    private int text_white;
-    private final Drawable yuanOfBlack;
     private ArrayList<String> list = new ArrayList<>();
     private String strToday = "";
 
@@ -47,13 +41,13 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
         strToday = DateUtils.getTagTimeStr(today);
 
         selectTime = DateUtils.getTagTimeStr(today);
-        Resources res = context.getResources();
-        last_msg_tv_color = ResourcesCompat.getColor(res,R.color.last_msg_tv_color,null);
-        text_black = ResourcesCompat.getColor(res,R.color.black_deep,null);
-        text_white = ResourcesCompat.getColor(res,R.color.white,null);
-        yuanOfRed = ResourcesCompat.getDrawable(res,R.drawable.yuan,null);
-        yuanOfBlack = ResourcesCompat.getDrawable(res,R.drawable.calendar_background,null);
-        white = ResourcesCompat.getDrawable(res,R.drawable.white,null);
+//        Resources res = context.getResources();
+//        last_msg_tv_color = ResourcesCompat.getColor(res,R.color.last_msg_tv_color,null);
+//        text_black = ResourcesCompat.getColor(res,R.color.black_deep,null);
+//        text_white = ResourcesCompat.getColor(res,R.color.white,null);
+//        yuanOfRed = ResourcesCompat.getDrawable(res,R.drawable.calendar_select_today,null);
+//        yuanOfBlack = ResourcesCompat.getDrawable(res,R.drawable.calendar_background,null);
+//        white = ResourcesCompat.getDrawable(res,R.drawable.white,null);
     }
 
     public void setUpdateListener(CalendarUpdateListener os) {
@@ -151,28 +145,20 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
                     today.add(Calendar.DATE, -7);//因为已经渲染过7天，所以today往前推7天， 代表当前page重绘；
 
                     //界面特效：变为红色，执行动画
-                    dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfRed);
-                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_white);
-                    ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(text_white);
-
+                    dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
+                    dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
                     //显示的调用invalidate
                     dayOfWeek.invalidate();
                     //添加监听：动画开始时，恢复上个选中的day的状态，结束时执行刷新方法;
 
                     //将上一个选中的day的状态恢复
                     if (day != null) {
-                        day.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-                        ((TextView) day.findViewById(R.id.gongli)).setTextColor(text_black);
-                        ((TextView) day.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
                         //特殊情况:上个选中的day今天
                         if (strToday.equals(tag)) {
-                            day.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfBlack);
-                            ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_black);
-                            ((TextView) day.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
+                            day.findViewById(R.id.cal_container).setActivated(true);
+                            day.findViewById(R.id.cal_container).setSelected(false);
                         } else {
-                            day.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-                            ((TextView) day.findViewById(R.id.gongli)).setTextColor(text_black);
-                            ((TextView) day.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
+                            day.findViewById(R.id.cal_container).setActivated(false);
                         }
                     }
 
@@ -181,32 +167,25 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
                 }
             });
+            View dayContainer = dayOfWeek.findViewById(R.id.cal_container);
             if (strToday.equals(DateUtils.getTagTimeStr(today))) {
-                dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfBlack);
-                ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_black);
-                ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
+                dayContainer.setActivated(true);
+                dayContainer.setSelected(false);
                 if (!selectTime.equals(strToday)) {
                     today.add(Calendar.DATE, 1);
                     continue;
                 }
             } else {
-                dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-                ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_black);
-                ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
+                dayContainer.setActivated(false);
             }
             if (selectTime.equals(DateUtils.getTagTimeStr(today))) {
-
-                dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(yuanOfRed);
-                ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_white);
-                ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(text_white);
-
+                dayContainer.setActivated(true);
+                dayContainer.setSelected(true);
 
                 day = dayOfWeek;
                 tag = selectTime;
             } else {
-                dayOfWeek.findViewById(R.id.cal_container).setBackgroundDrawable(white);
-                ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(text_black);
-                ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(last_msg_tv_color);
+                dayContainer.setActivated(false);
             }
             if (list.contains(DateUtils.getTagTimeStr(today))) {
                 ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setVisibility(View.VISIBLE);

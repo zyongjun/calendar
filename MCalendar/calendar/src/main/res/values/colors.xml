@@ -3,8 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="calendar_select_blue">#02A6FF</color>
+    <color name="calendar_select_blue_other">#8ED1FF</color>
     <color name="black_deep">#FF000000</color>
+    <color name="black_gray">#383C41</color>
     <color name="purple">#848484</color>
     <color name="last_msg_tv_color">#ffaaaaaa</color>
     <color name="white">#ffffffff</color>
