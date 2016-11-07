@@ -483,12 +483,15 @@ public class HandMoveLayout extends LinearLayout {
         });
     }
 
-    public void toogle() {
+    public boolean toogle() {
+        boolean isExpand = false;
         if (monthViewpager.getVisibility() != VISIBLE) {
+            isExpand = true;
             expand();
         } else {
             collapse();
         }
+        return isExpand;
     }
 
     public void collapse() {
