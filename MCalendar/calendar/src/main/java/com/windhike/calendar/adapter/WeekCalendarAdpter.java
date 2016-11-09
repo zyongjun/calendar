@@ -146,7 +146,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
                     //界面特效：变为红色，执行动画
                     dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
-                    dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
+                    dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
                     //显示的调用invalidate
                     dayOfWeek.invalidate();
                     //添加监听：动画开始时，恢复上个选中的day的状态，结束时执行刷新方法;
@@ -170,8 +170,9 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
             View dayContainer = dayOfWeek.findViewById(R.id.cal_container);
             if (strToday.equals(DateUtils.getTagTimeStr(today))) {
                 dayContainer.setActivated(true);
-                dayContainer.setSelected(false);
+                dayContainer.setSelected(true);
                 if (!selectTime.equals(strToday)) {
+                    dayContainer.setSelected(false);
                     today.add(Calendar.DATE, 1);
                     continue;
                 }

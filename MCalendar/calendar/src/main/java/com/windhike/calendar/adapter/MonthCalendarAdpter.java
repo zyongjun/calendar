@@ -187,7 +187,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                         }
                         //变为红色
                         dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
-                        dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
+                        dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
                         //显示的调用invalidate
                         dayOfWeek.invalidate();
                         //  添加监听：动画结束时执行刷新方法;
@@ -197,9 +197,10 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                 });
                 if (strToDay.equals(DateUtils.getTagTimeStr(today))) {
                     dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
-                    dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
+                    dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
                     if (!selectTime.equals(strToDay)) {
                         today.add(Calendar.DATE, 1);
+                        dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
                         continue;
                     }
                 } else {
@@ -228,9 +229,9 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                     dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
                     dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
 
-                    if (strToDay.equals(DateUtils.getTagTimeStr(today))) {
-                        dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
-                    }
+//                    if (strToDay.equals(DateUtils.getTagTimeStr(today))) {
+//                        dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
+//                    }
 
                     day = dayOfWeek;
                     if (MonthCalendarAdpter.this.os != null) {
