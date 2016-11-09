@@ -90,7 +90,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
      * 渲染page中的view：7天
      */
     private void render(final ViewGroup view, final Calendar today) {
-        for (int a = 0; a < 7; a++) {
+        for (int a = 0; a < 11; a=a+2) {
             final int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
             // int day_of_year=today.get(Calendar.DAY_OF_YEAR);
             final ViewGroup dayOfWeek = (ViewGroup) view.getChildAt(a);
@@ -126,8 +126,8 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
                     today.add(Calendar.DATE, -7);//因为已经渲染过7天，所以today往前推7天， 代表当前page重绘；
 
                     //界面特效：变为红色，执行动画
-                    dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
-                    dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
+                    dayOfWeek.findViewById(R.id.ll_day).setActivated(true);
+                    dayOfWeek.findViewById(R.id.ll_day).setSelected(true);
                     //显示的调用invalidate
                     dayOfWeek.invalidate();
                     //添加监听：动画开始时，恢复上个选中的day的状态，结束时执行刷新方法;
@@ -136,10 +136,10 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
                     if (day != null) {
                         //特殊情况:上个选中的day今天
                         if (strToday.equals(tag)) {
-                            day.findViewById(R.id.cal_container).setActivated(true);
-                            day.findViewById(R.id.cal_container).setSelected(false);
+                            day.findViewById(R.id.ll_day).setActivated(true);
+                            day.findViewById(R.id.ll_day).setSelected(false);
                         } else {
-                            day.findViewById(R.id.cal_container).setActivated(false);
+                            day.findViewById(R.id.ll_day).setActivated(false);
                         }
                     }
 
@@ -148,7 +148,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
                 }
             });
-            View dayContainer = dayOfWeek.findViewById(R.id.cal_container);
+            View dayContainer = dayOfWeek.findViewById(R.id.ll_day);
             if (strToday.equals(DateUtils.getTagTimeStr(today))) {
                 dayContainer.setActivated(true);
                 dayContainer.setSelected(true);

@@ -68,7 +68,7 @@
             android:textColor="@color/black_gray" />
 
     </LinearLayout>
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll_calendar_viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,5 +83,5 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"/>
 
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

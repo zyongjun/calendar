@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:background="@color/white"
+    android:id="@+id/ll_day"
+    android:layout_width="42dp"
+    android:layout_height="42dp"
+    android:background="@drawable/calendar_today_selector"
     android:gravity="center"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/cal_container"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/calendar_today_selector"
+        android:gravity="center"
+        android:duplicateParentState="true"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/gongli"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="12"
             android:duplicateParentState="true"
             android:textColor="@color/common_day_selector"
@@ -28,20 +29,18 @@
             android:id="@+id/nongli"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:duplicateParentState="true"
             android:text="初一"
             android:textColor="@color/common_day_selector"
             android:textSize="10sp" />
-        <TextView
-            android:id="@+id/imv_point"
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:layout_gravity="center_horizontal"
-            android:duplicateParentState="true"
-            android:background="@drawable/calendar_event_selector"
-            android:layout_marginBottom="3dip"
-            android:layout_marginTop="2dip" />
-    </LinearLayout>
 
+    </LinearLayout>
+    <TextView
+        android:id="@+id/imv_point"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:duplicateParentState="true"
+        android:background="@drawable/calendar_event_selector"
+        android:layout_marginBottom="3dp"
+        />
 </LinearLayout>

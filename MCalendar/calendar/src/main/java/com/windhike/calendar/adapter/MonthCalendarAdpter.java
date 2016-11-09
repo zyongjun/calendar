@@ -110,9 +110,9 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
      */
     private void render(final ViewGroup view1, final Calendar today) {
         //一页显示一个月+7天，为42；
-        for (int b = 0; b < 6; b++) {
+        for (int b = 0; b < 11; b=b+2) {
             final ViewGroup view = (ViewGroup) view1.getChildAt(b);
-            for (int a = 0; a < 7; a++) {
+            for (int a = 0; a < 13; a=a+2) {
                 final int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
                 // int day_of_year=today.get(Calendar.DAY_OF_YEAR);
                 final ViewGroup dayOfWeek = (ViewGroup) view.getChildAt(a);
@@ -157,19 +157,19 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                         //
                         //恢复上个选中的day的状态
                         if (day != null) {
-                            day.findViewById(R.id.cal_container).setActivated(false);
+                            day.findViewById(R.id.ll_day).setActivated(false);
                             //特殊情况
                             if (strToDay.equals(tag)) {
-                                day.findViewById(R.id.cal_container).setActivated(true);
-                                day.findViewById(R.id.cal_container).setSelected(false);
+                                day.findViewById(R.id.ll_day).setActivated(true);
+                                day.findViewById(R.id.ll_day).setSelected(false);
 
                             } else {
-                                day.findViewById(R.id.cal_container).setActivated(false);
+                                day.findViewById(R.id.ll_day).setActivated(false);
                             }
                         }
                         //变为红色
-                        dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
-                        dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
+                        dayOfWeek.findViewById(R.id.ll_day).setActivated(true);
+                        dayOfWeek.findViewById(R.id.ll_day).setSelected(true);
                         //显示的调用invalidate
                         dayOfWeek.invalidate();
                         //  添加监听：动画结束时执行刷新方法;
@@ -178,15 +178,15 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                     }
                 });
                 if (strToDay.equals(DateUtils.getTagTimeStr(today))) {
-                    dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
-                    dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
+                    dayOfWeek.findViewById(R.id.ll_day).setActivated(true);
+                    dayOfWeek.findViewById(R.id.ll_day).setSelected(true);
                     if (!selectTime.equals(strToDay)) {
                         today.add(Calendar.DATE, 1);
-                        dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
+                        dayOfWeek.findViewById(R.id.ll_day).setSelected(false);
                         continue;
                     }
                 } else {
-                    dayOfWeek.findViewById(R.id.cal_container).setActivated(false);
+                    dayOfWeek.findViewById(R.id.ll_day).setActivated(false);
                 }
                 //不是当前月的显示为灰色
                 if (today.get(Calendar.MONTH) != (Integer.parseInt((String) view1.getTag()))) {
@@ -208,11 +208,11 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                 }
                 //如果是选中天的话显示为红色
                 if (selectTime.equals(DateUtils.getTagTimeStr(today))) {
-                    dayOfWeek.findViewById(R.id.cal_container).setActivated(true);
-                    dayOfWeek.findViewById(R.id.cal_container).setSelected(true);
+                    dayOfWeek.findViewById(R.id.ll_day).setActivated(true);
+                    dayOfWeek.findViewById(R.id.ll_day).setSelected(true);
 
 //                    if (strToDay.equals(DateUtils.getTagTimeStr(today))) {
-//                        dayOfWeek.findViewById(R.id.cal_container).setSelected(false);
+//                        dayOfWeek.findViewById(R.id.ll_day).setSelected(false);
 //                    }
 
                     day = dayOfWeek;
@@ -221,7 +221,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                     }
                     tag = selectTime;
                 } else {
-                    dayOfWeek.findViewById(R.id.cal_container).setActivated(false);
+                    dayOfWeek.findViewById(R.id.ll_day).setActivated(false);
                 }
                 today.add(Calendar.DATE, 1);
             }
