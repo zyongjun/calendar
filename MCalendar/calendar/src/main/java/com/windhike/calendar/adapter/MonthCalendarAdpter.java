@@ -2,7 +2,6 @@ package com.windhike.calendar.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.windhike.calendar.R;
 import com.windhike.calendar.utils.CalendarUpdateListener;
 import com.windhike.calendar.utils.CalendarUtil;
 import com.windhike.calendar.utils.DateUtils;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -28,19 +26,12 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
 
     private CalendarUpdateListener os = null;
     private int last_msg_tv_color;
-    private Drawable yuanOfRed;
-    private Drawable white;
-    private int text_black;
-    private int text_white;
-    private final Drawable yuanOfBlack;
 
     private String strToDay = "";
-    private ArrayList<String> list = new ArrayList<>();
 
-    public MonthCalendarAdpter(List<View> views, Context context, ArrayList<String> list) {
+    public MonthCalendarAdpter(List<View> views, Context context) {
         this.views = views;
         this.context = context;
-        this.list = list;
         //选中今天
         Calendar today = new GregorianCalendar();
         today.setTimeInMillis(System.currentTimeMillis());
@@ -49,12 +40,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
 
         selectTime = DateUtils.getTagTimeStr(today);
         Resources res = context.getResources();
-        text_black = ResourcesCompat.getColor(res,R.color.black_deep,null);
         last_msg_tv_color = ResourcesCompat.getColor(res,R.color.last_msg_tv_color,null);
-        text_white = ResourcesCompat.getColor(res,R.color.white,null);
-        yuanOfRed = ResourcesCompat.getDrawable(res,R.drawable.calendar_select_today,null);
-        yuanOfBlack = ResourcesCompat.getDrawable(res,R.drawable.calendar_background,null);
-        white = ResourcesCompat.getDrawable(res,R.drawable.white,null);
     }
 
     public void setUpdateListener(CalendarUpdateListener os) {
@@ -88,18 +74,14 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
         } catch (Exception e) {
 
         }
-        refresh(view, position, list);
+        refresh(view, position);
         return view;
-    }
-
-    public void getTimeList(ArrayList<String> list) {
-        this.list = list;
     }
 
     /**
      * 提供对外的刷新接口
      */
-    public void refresh(ViewGroup view, int position, ArrayList<String> list) {
+    public void refresh(ViewGroup view, int position) {
         //给view 填充内容
 
         //设置开始时间为本周日
@@ -143,17 +125,17 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                 } catch (Exception e) {
 
                 }
-                ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setVisibility(View.INVISIBLE);
                 if (str.equals("初一")) {//如果是初一，显示月份
                     str = new CalendarUtil().getChineseMonth(today.get(Calendar.YEAR),
                             today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
                 }
                 ((TextView) dayOfWeek.findViewById(R.id.nongli)).setText(str);
-                if (list.contains(DateUtils.getTagTimeStr(today))) {
-                    ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setVisibility(View.VISIBLE);
-                    ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setImageResource(R.drawable.calendar_item_point);
+                View eventFlagView = dayOfWeek.findViewById(R.id.imv_point);
+                if (calendarEventShowTimeList.contains(DateUtils.getTagTimeStr(today))) {
+                    eventFlagView.setVisibility(View.VISIBLE);
+//                    ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setImageResource(R.drawable.calendar_item_point);
                 } else {
-                    ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setVisibility(View.INVISIBLE);
+                    eventFlagView.setVisibility(View.INVISIBLE);
                 }
                 dayOfWeek.setTag(DateUtils.getTagTimeStr(today));
                 Calendar calendar = Calendar.getInstance();

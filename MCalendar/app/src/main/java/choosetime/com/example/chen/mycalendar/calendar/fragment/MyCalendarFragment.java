@@ -67,8 +67,19 @@ public class MyCalendarFragment extends Fragment {
     private HasTwoAdapterViewpager viewpagerWeek;
     private List<View> views;
     private WeekCalendarAdpter weekCalendarAdpter;
-    private ArrayList<String> timeList = new ArrayList<>();
+    private ArrayList<String> calendarEventShowtimeList = new ArrayList<>();
+    private ArrayList<String> calendarHoliday = new ArrayList<>();
     public void initCalendar() {
+        Calendar calendar = Calendar.getInstance();
+        calendarEventShowtimeList.add(DateUtils.getTagTimeStr(calendar));
+        calendar.add(Calendar.DATE,-3);
+        calendarEventShowtimeList.add(DateUtils.getTagTimeStr(calendar));
+
+        calendar.add(Calendar.DATE,-4);
+        calendarHoliday.add(DateUtils.getTagTimeStr(calendar));
+        calendar.add(Calendar.DATE,-1);
+        calendarHoliday.add(DateUtils.getTagTimeStr(calendar));
+
         viewPager = (HasTwoAdapterViewpager) getView().findViewById(R.id.calendar_viewpager);
         viewpagerWeek = (HasTwoAdapterViewpager) getView().findViewById(R.id.calendar_viewpager_week);
 
@@ -86,7 +97,7 @@ public class MyCalendarFragment extends Fragment {
         views.add(layout2);
         views.add(layout3);
 
-        adpter = new MonthCalendarAdpter(views, getActivity(), timeList);
+        adpter = new MonthCalendarAdpter(views, getActivity());
         adpter.setUpdateListener(updateListener);
 
         //制造日试图所需view
@@ -99,7 +110,7 @@ public class MyCalendarFragment extends Fragment {
         viewss.add(layout1ri);
         viewss.add(layout2ri);
         viewss.add(layout3ri);
-        weekCalendarAdpter = new WeekCalendarAdpter(viewss, getActivity(), timeList);
+        weekCalendarAdpter = new WeekCalendarAdpter(viewss, getActivity());
         weekCalendarAdpter.setUpdateListener(updateListener);
         viewPager.setAdapter(adpter);
         viewPager.setCurrentItem(1200, true);
@@ -197,7 +208,9 @@ public class MyCalendarFragment extends Fragment {
             //得到这个selecttime对应的currentItem
             currentItem = 0;
             if (viewPager.getAdapter() instanceof MonthCalendarAdpter) {
-                adpter.getTimeList(timeList);
+//                adpter.getTimeList(timeList);
+                adpter.setEventShowTimeList(calendarEventShowtimeList);
+                adpter.setCalendarHolidayList(calendarHoliday);
                 //月视图
                 currentItem = adpter.getMonthCurrentItem();
                 int odl = viewPager.getCurrentItem();
@@ -219,7 +232,9 @@ public class MyCalendarFragment extends Fragment {
                 if (DateUtils.getWeekStr(DateUtils.stringToDate(adpter.getSelectTime())).equals("星期日")) {
                     currentItem++;
                 }
-                weekCalendarAdpter.getTimeList(timeList);
+//                weekCalendarAdpter.getTimeList(timeList);
+                weekCalendarAdpter.setEventShowTimeList(calendarEventShowtimeList);
+                weekCalendarAdpter.setCalendarHolidayList(calendarHoliday);
                 int odl = viewPager.getCurrentItem();
                 viewPager.setCurrentItem(currentItem, false);
                 //刷新已经存在的3个视图view

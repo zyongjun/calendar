@@ -33,12 +33,15 @@
             android:text="初一"
             android:textColor="@color/common_day_selector"
             android:textSize="10sp" />
+        <TextView
+            android:id="@+id/imv_point"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center_horizontal"
+            android:duplicateParentState="true"
+            android:background="@drawable/calendar_event_selector"
+            android:layout_marginBottom="3dip"
+            android:layout_marginTop="2dip" />
     </LinearLayout>
-    <ImageView
-        android:id="@+id/imv_point"
-        android:layout_width="5dip"
-        android:layout_height="5dip"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="3dip"
-        android:layout_marginTop="2dip" />
+
 </LinearLayout>

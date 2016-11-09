@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false" >
-    <solid android:color="@color/calendar_select_blue" />
-    <stroke
-        android:width="2dp"
-        android:color="@color/calendar_select_blue" />
+    <solid android:color="@color/white" />
+    <!--<stroke-->
+        <!--android:width="2dp"-->
+        <!--android:color="@color/white" />-->
     <size android:width="10dp"
         android:height="10dp" />
 </shape>

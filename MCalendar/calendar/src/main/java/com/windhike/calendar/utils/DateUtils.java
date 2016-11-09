@@ -65,12 +65,10 @@ public class DateUtils {
      * 得到calendar的日期：xxxx-xx-xx
      */
     public static String getTagTimeStr(Calendar calendar) {
-        String ss = "";
-        if (calendar != null) {
-            ss = DateUtils.longToStr(calendar.getTimeInMillis(), DateUtils.FORMAT_DATE);
-        }
-        return ss;
+        return DateUtils.longToStr(calendar.getTimeInMillis(), DateUtils.FORMAT_DATE);
     }
+
+
 
     /**
      * 得到calendar的日期：xx月xx日

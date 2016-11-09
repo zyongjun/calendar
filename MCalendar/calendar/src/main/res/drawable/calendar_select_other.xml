@@ -4,11 +4,9 @@
     android:shape="oval"
     android:useLevel="false" >
     <solid android:color="@color/calendar_select_blue_other" />
-    <solid
-        android:color="@color/calendar_select_blue_other" />
-    <stroke
-        android:width="2dp"
-        android:color="@color/calendar_select_blue_other" />
+    <!--<stroke-->
+        <!--android:width="2dp"-->
+        <!--android:color="@color/calendar_select_blue_other" />-->
     <size android:width="10dp"
         android:height="10dp" />
 </shape>

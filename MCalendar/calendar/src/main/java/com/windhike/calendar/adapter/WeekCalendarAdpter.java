@@ -1,9 +1,6 @@
 package com.windhike.calendar.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,7 +9,6 @@ import com.windhike.calendar.R;
 import com.windhike.calendar.utils.CalendarUpdateListener;
 import com.windhike.calendar.utils.CalendarUtil;
 import com.windhike.calendar.utils.DateUtils;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -27,27 +23,16 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
     private CalendarUpdateListener os = null;
 
-    private ArrayList<String> list = new ArrayList<>();
     private String strToday = "";
 
-    public WeekCalendarAdpter(List<View> views, Context context, ArrayList<String> list) {
-        this.list = list;
+    public WeekCalendarAdpter(List<View> views, Context context) {
         this.views = views;
         this.context = context;
         //选中今天
         Calendar today = new GregorianCalendar();
         today.setTimeInMillis(System.currentTimeMillis());
-
         strToday = DateUtils.getTagTimeStr(today);
-
         selectTime = DateUtils.getTagTimeStr(today);
-//        Resources res = context.getResources();
-//        last_msg_tv_color = ResourcesCompat.getColor(res,R.color.last_msg_tv_color,null);
-//        text_black = ResourcesCompat.getColor(res,R.color.black_deep,null);
-//        text_white = ResourcesCompat.getColor(res,R.color.white,null);
-//        yuanOfRed = ResourcesCompat.getDrawable(res,R.drawable.calendar_select_today,null);
-//        yuanOfBlack = ResourcesCompat.getDrawable(res,R.drawable.calendar_background,null);
-//        white = ResourcesCompat.getDrawable(res,R.drawable.white,null);
     }
 
     public void setUpdateListener(CalendarUpdateListener os) {
@@ -68,10 +53,6 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
 //        container.removeView(views.get(position % views.size()));
-    }
-
-    public void getTimeList(ArrayList<String> list) {
-        this.list = list;
     }
 
     @Override
@@ -188,11 +169,12 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
             } else {
                 dayContainer.setActivated(false);
             }
-            if (list.contains(DateUtils.getTagTimeStr(today))) {
-                ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setVisibility(View.VISIBLE);
-                ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setImageResource(R.drawable.calendar_item_point);
+            View eventFlagView = dayOfWeek.findViewById(R.id.imv_point);
+            if (calendarEventShowTimeList.contains(DateUtils.getTagTimeStr(today))) {
+                eventFlagView.setVisibility(View.VISIBLE);
+//                ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setImageResource(R.drawable.calendar_item_point);
             } else {
-                ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setVisibility(View.INVISIBLE);
+                eventFlagView.setVisibility(View.INVISIBLE);
             }
 
             today.add(Calendar.DATE, 1);
