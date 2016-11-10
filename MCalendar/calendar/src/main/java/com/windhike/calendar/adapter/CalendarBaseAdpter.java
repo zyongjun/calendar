@@ -9,13 +9,15 @@ import java.util.List;
  * Created by Administrator on 2016/6/13 0013.
  */
 public class CalendarBaseAdpter extends PagerAdapter {
-
+    protected static final String HOLIDAY_TXT = "休";
+    protected static final String WEEKDAY_TXT = "班";
     /**
      * 选中时间：xx-xx-xx
      * */
     public static String selectTime = "";
     protected List<String> calendarEventShowTimeList = new ArrayList<>();
     protected List<String> calendarHolidayList = new ArrayList<>();
+    protected  List<String> calendarWeekdayList = new ArrayList<>();
 
     public void setEventShowTimeList(List<String> showTimeList) {
         calendarEventShowTimeList.clear();
@@ -28,6 +30,13 @@ public class CalendarBaseAdpter extends PagerAdapter {
         calendarHolidayList.clear();
         if (holidayList != null) {
             calendarHolidayList.addAll(holidayList);
+        }
+    }
+
+    public void setCalendarWeekdayList(List<String> weekdayList) {
+        calendarWeekdayList.clear();
+        if (weekdayList != null) {
+            calendarWeekdayList.addAll(weekdayList);
         }
     }
     /**

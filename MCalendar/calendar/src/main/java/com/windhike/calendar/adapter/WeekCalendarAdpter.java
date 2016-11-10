@@ -176,7 +176,18 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
             } else {
                 eventFlagView.setVisibility(View.INVISIBLE);
             }
-
+            TextView vHoliday = (TextView) dayOfWeek.findViewById(R.id.tv_holiday);
+            if (calendarHolidayList.contains(DateUtils.getTagTimeStr(today))) {
+                vHoliday.setVisibility(View.VISIBLE);
+                vHoliday.setActivated(true);
+                vHoliday.setText(HOLIDAY_TXT);
+            } else if (calendarWeekdayList.contains(DateUtils.getTagTimeStr(today))) {
+                vHoliday.setVisibility(View.VISIBLE);
+                vHoliday.setActivated(false);
+                vHoliday.setText(WEEKDAY_TXT);
+            } else {
+                vHoliday.setVisibility(View.GONE);
+            }
             today.add(Calendar.DATE, 1);
         }
     }

@@ -14,4 +14,6 @@
     <color name="common_bg">#EBEBEB</color>
     <color name="gray_pressed">#666667</color>
     <color name="news_time_color">#9a9a9a</color>
+    <color name="holiday_color">#26CE74</color>
+    <color name="weekday_color">#F74C31</color>
 </resources>
