@@ -76,9 +76,9 @@ public class MyCalendarFragment extends Fragment {
         calendarEventShowtimeList.add(DateUtils.getTagTimeStr(calendar));
 
         calendar.add(Calendar.DATE,-4);
-        calendarHoliday.add(DateUtils.getTagTimeStr(calendar));
+        calendarHoliday.add(DateUtils.longToStr(calendar.getTimeInMillis(),DateUtils.FORMAT_HOLIDAY));
         calendar.add(Calendar.DATE,-1);
-        calendarHoliday.add(DateUtils.getTagTimeStr(calendar));
+        calendarHoliday.add(DateUtils.longToStr(calendar.getTimeInMillis(),DateUtils.FORMAT_HOLIDAY));
 
         viewPager = (HasTwoAdapterViewpager) getView().findViewById(R.id.calendar_viewpager);
         viewpagerWeek = (HasTwoAdapterViewpager) getView().findViewById(R.id.calendar_viewpager_week);

@@ -54,8 +54,9 @@
         android:layout_height="12dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:gravity="center"
         android:textColor="@color/white"
         android:visibility="gone"
-        android:textSize="10sp"
+        android:textSize="8sp"
         android:text="休" />
 </RelativeLayout>
