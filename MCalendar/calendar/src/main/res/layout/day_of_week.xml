@@ -52,10 +52,10 @@
         android:id="@+id/tv_holiday"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:background="@drawable/calendar_holiday"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:textColor="@color/white"
+        android:visibility="gone"
         android:textSize="10sp"
         android:text="休" />
 </RelativeLayout>

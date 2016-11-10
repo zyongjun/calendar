@@ -90,7 +90,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
      * 渲染page中的view：7天
      */
     private void render(final ViewGroup view, final Calendar today) {
-        for (int a = 0; a < 11; a=a+2) {
+        for (int a = 0; a < 13; a=a+2) {
             final int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
             // int day_of_year=today.get(Calendar.DAY_OF_YEAR);
             final ViewGroup dayOfWeek = (ViewGroup) view.getChildAt(a);
@@ -179,11 +179,13 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
             TextView vHoliday = (TextView) dayOfWeek.findViewById(R.id.tv_holiday);
             if (calendarHolidayList.contains(DateUtils.getTagTimeStr(today))) {
                 vHoliday.setVisibility(View.VISIBLE);
-                vHoliday.setActivated(true);
+//                vHoliday.setActivated(true);
+                vHoliday.setBackgroundResource(R.drawable.calendar_holiday_shape);
                 vHoliday.setText(HOLIDAY_TXT);
             } else if (calendarWeekdayList.contains(DateUtils.getTagTimeStr(today))) {
                 vHoliday.setVisibility(View.VISIBLE);
-                vHoliday.setActivated(false);
+//                vHoliday.setActivated(false);
+                vHoliday.setBackgroundResource(R.drawable.calendar_weekday_shape);
                 vHoliday.setText(WEEKDAY_TXT);
             } else {
                 vHoliday.setVisibility(View.GONE);

@@ -141,11 +141,13 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                 TextView vHoliday = (TextView) dayOfWeek.findViewById(R.id.tv_holiday);
                 if (calendarHolidayList.contains(DateUtils.getTagTimeStr(today))) {
                     vHoliday.setVisibility(View.VISIBLE);
-                    vHoliday.setActivated(true);
+//                    vHoliday.setActivated(true);
+                    vHoliday.setBackgroundResource(R.drawable.calendar_holiday_shape);
                     vHoliday.setText(HOLIDAY_TXT);
                 } else if (calendarWeekdayList.contains(DateUtils.getTagTimeStr(today))) {
                     vHoliday.setVisibility(View.VISIBLE);
-                    vHoliday.setActivated(false);
+//                    vHoliday.setActivated(false);
+                    vHoliday.setBackgroundResource(R.drawable.calendar_weekday_shape);
                     vHoliday.setText(WEEKDAY_TXT);
                 } else {
                     vHoliday.setVisibility(View.GONE);
