@@ -177,12 +177,12 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
                 eventFlagView.setVisibility(View.INVISIBLE);
             }
             TextView vHoliday = (TextView) dayOfWeek.findViewById(R.id.tv_holiday);
-            if (calendarHolidayList.contains(DateUtils.getTagTimeStr(today))) {
+            if (calendarHolidayList.contains(DateUtils.longToStr(today.getTimeInMillis(),DateUtils.FORMAT_HOLIDAY))) {
                 vHoliday.setVisibility(View.VISIBLE);
 //                vHoliday.setActivated(true);
                 vHoliday.setBackgroundResource(R.drawable.calendar_holiday_shape);
                 vHoliday.setText(HOLIDAY_TXT);
-            } else if (calendarWeekdayList.contains(DateUtils.getTagTimeStr(today))) {
+            } else if (calendarWeekdayList.contains(DateUtils.longToStr(today.getTimeInMillis(),DateUtils.FORMAT_HOLIDAY))) {
                 vHoliday.setVisibility(View.VISIBLE);
 //                vHoliday.setActivated(false);
                 vHoliday.setBackgroundResource(R.drawable.calendar_weekday_shape);

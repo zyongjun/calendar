@@ -18,6 +18,7 @@ public class DateUtils {
     public static final String FORMAT_DATE = "yyyy-MM-dd";
 
     public static final String FORMAT_DATEHR = "yyyy-MM-dd HH:mm";
+    public static final String FORMAT_HOLIDAY = "yyyyMMdd";
 
     public static final String FORMAT_DATE_YEAR = "yyyy-MM-dd";
 
@@ -67,8 +68,6 @@ public class DateUtils {
     public static String getTagTimeStr(Calendar calendar) {
         return DateUtils.longToStr(calendar.getTimeInMillis(), DateUtils.FORMAT_DATE);
     }
-
-
 
     /**
      * 得到calendar的日期：xx月xx日
