@@ -76,6 +76,7 @@
         >
         <com.windhike.calendar.widget.HasTwoAdapterViewpager
             android:id="@+id/calendar_viewpager"
+            android:visibility="gone"
             android:layout_width="fill_parent"
             android:layout_height="300dp"/>
         <com.windhike.calendar.widget.HasTwoAdapterViewpager
