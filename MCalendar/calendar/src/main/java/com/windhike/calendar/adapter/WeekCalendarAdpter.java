@@ -3,7 +3,6 @@ package com.windhike.calendar.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.windhike.calendar.R;
 import com.windhike.calendar.utils.CalendarUpdateListener;
@@ -19,7 +18,6 @@ import java.util.List;
  */
 public class WeekCalendarAdpter extends CalendarBaseAdpter {
     private List<View> views;
-    private Context context;
 
     private CalendarUpdateListener os = null;
 
@@ -27,10 +25,8 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
     public WeekCalendarAdpter(List<View> views, Context context) {
         this.views = views;
-        this.context = context;
         //选中今天
-        Calendar today = new GregorianCalendar();
-        today.setTimeInMillis(System.currentTimeMillis());
+        Calendar today = Calendar.getInstance();
         strToday = DateUtils.getTagTimeStr(today);
         selectTime = DateUtils.getTagTimeStr(today);
     }
@@ -42,7 +38,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
     @Override
     public int getCount() {
-        return 9600;
+        return 900;
     }
 
     @Override
@@ -92,9 +88,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
     private void render(final ViewGroup view, final Calendar today) {
         for (int a = 0; a < 13; a=a+2) {
             final int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
-            // int day_of_year=today.get(Calendar.DAY_OF_YEAR);
             final ViewGroup dayOfWeek = (ViewGroup) view.getChildAt(a);
-            //((TextView) dayOfWeek.getChildAt(0)).setText(getStr(today.get(Calendar.DAY_OF_WEEK)));
             ((TextView) dayOfWeek.findViewById(R.id.gongli)).setText(dayOfMonth + "");
             String str = "";
             try {
@@ -104,7 +98,7 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
             }
 
-            if (str.equals("初一")) {//如果是初一，显示月份
+            if (str.equals(DAY_CHINESE_MONTH_FIRST)) {//如果是初一，显示月份
                 str = new CalendarUtil().getChineseMonth(today.get(Calendar.YEAR),
                         today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
             }
@@ -172,19 +166,16 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
             View eventFlagView = dayOfWeek.findViewById(R.id.imv_point);
             if (calendarEventShowTimeList.contains(DateUtils.getTagTimeStr(today))) {
                 eventFlagView.setVisibility(View.VISIBLE);
-//                ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setImageResource(R.drawable.calendar_item_point);
             } else {
                 eventFlagView.setVisibility(View.INVISIBLE);
             }
             TextView vHoliday = (TextView) dayOfWeek.findViewById(R.id.tv_holiday);
             if (calendarHolidayList.contains(DateUtils.longToStr(today.getTimeInMillis(),DateUtils.FORMAT_HOLIDAY))) {
                 vHoliday.setVisibility(View.VISIBLE);
-//                vHoliday.setActivated(true);
                 vHoliday.setBackgroundResource(R.drawable.calendar_holiday_shape);
                 vHoliday.setText(HOLIDAY_TXT);
             } else if (calendarWeekdayList.contains(DateUtils.longToStr(today.getTimeInMillis(),DateUtils.FORMAT_HOLIDAY))) {
                 vHoliday.setVisibility(View.VISIBLE);
-//                vHoliday.setActivated(false);
                 vHoliday.setBackgroundResource(R.drawable.calendar_weekday_shape);
                 vHoliday.setText(WEEKDAY_TXT);
             } else {
@@ -224,12 +215,12 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
 
         //选中时间的(day of yeay)-此刻(day of yeay)=天数
         int aa = ((int) (sele.getTime().getTime() / 1000) - (int) (today.getTime().getTime() / 1000)) / 3600 / 24;
-        int aa2 = 0;
-        if (Math.abs(aa) % 7 == 0) {
-            aa2 = Math.abs(aa) / 7;
-        } else {
-            aa2 = Math.abs(aa) / 7;
-        }
+//        int aa2 = 0;
+//        if (Math.abs(aa) % 7 == 0) {
+//            aa2 = Math.abs(aa) / 7;
+//        } else {
+          int  aa2 = Math.abs(aa) / 7;
+//        }
         if (aa >= 0) {
             return this.getCount() / 2 + aa2;
         } else {

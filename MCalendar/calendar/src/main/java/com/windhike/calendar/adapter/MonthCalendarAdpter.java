@@ -1,12 +1,9 @@
 package com.windhike.calendar.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.windhike.calendar.R;
 import com.windhike.calendar.utils.CalendarUpdateListener;
@@ -22,7 +19,6 @@ import java.util.List;
  */
 public class MonthCalendarAdpter extends CalendarBaseAdpter {
     private List<View> views;
-    private Context context;
 
     private CalendarUpdateListener os = null;
     private int last_msg_tv_color;
@@ -31,7 +27,6 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
 
     public MonthCalendarAdpter(List<View> views, Context context) {
         this.views = views;
-        this.context = context;
         //选中今天
         Calendar today = new GregorianCalendar();
         today.setTimeInMillis(System.currentTimeMillis());
@@ -39,8 +34,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
         strToDay = DateUtils.getTagTimeStr(today);
 
         selectTime = DateUtils.getTagTimeStr(today);
-        Resources res = context.getResources();
-        last_msg_tv_color = ResourcesCompat.getColor(res,R.color.last_msg_tv_color,null);
+        last_msg_tv_color = ResourcesCompat.getColor(context.getResources(),R.color.last_msg_tv_color,null);
     }
 
     public void setUpdateListener(CalendarUpdateListener os) {
@@ -49,7 +43,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
 
     @Override
     public int getCount() {
-        return 2400;
+        return 600;
     }
 
     @Override
@@ -88,9 +82,9 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
         Calendar today = new GregorianCalendar();
         today.setTimeInMillis(System.currentTimeMillis());
         //距离当前时间的月数
-        int month = 1200 - position;
+        int month = getCount()/2 - position;
         today.add(Calendar.MONTH, -month);
-        view.setTag(today.get(Calendar.MONTH) + "");
+        view.setTag(today.get(Calendar.MONTH));
         //找到这个月的第一天所在星期的周日
         today.add(Calendar.DAY_OF_MONTH, -(today.get(Calendar.DAY_OF_MONTH) - 1));
 
@@ -104,7 +98,6 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
         render(view, today);
     }
 
-    private static final String TAG = "MonthCalendarAdpter";
     /**
      * 渲染page中的view：7天
      */
@@ -114,7 +107,6 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
             final ViewGroup view = (ViewGroup) view1.getChildAt(b);
             for (int a = 0; a < 13; a=a+2) {
                 final int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
-                // int day_of_year=today.get(Calendar.DAY_OF_YEAR);
                 final ViewGroup dayOfWeek = (ViewGroup) view.getChildAt(a);
                 //((TextView) dayOfWeek.getChildAt(0)).setText(getStr(today.get(Calendar.DAY_OF_WEEK)));
                 ((TextView) dayOfWeek.findViewById(R.id.gongli)).setText(dayOfMonth + "");
@@ -125,7 +117,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                 } catch (Exception e) {
 
                 }
-                if (str.equals("初一")) {//如果是初一，显示月份
+                if (str.equals(DAY_CHINESE_MONTH_FIRST)) {//如果是初一，显示月份
                     str = new CalendarUtil().getChineseMonth(today.get(Calendar.YEAR),
                             today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
                 }
@@ -164,7 +156,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                         }
 
                         selectTime = dayOfWeek.getTag().toString();
-                        Log.e(TAG, "onClick: ---------"+selectTime, null);
+//                        Log.e(TAG, "onClick: ---------"+selectTime, null);
                         today.add(Calendar.DATE, -42);//因为已经渲染过42天，所以today往前推42天， 代表当前page重绘；
 
                         //
@@ -215,8 +207,8 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                     today.add(Calendar.DATE, 1);
                     continue;
                 } else {
-                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setActivated(false);
-                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setEnabled(true);
+                    dayOfWeek.findViewById(R.id.gongli).setActivated(false);
+                    dayOfWeek.findViewById(R.id.gongli).setEnabled(true);
                     dayOfWeek.setAlpha(1.0f);
                 }
                 //如果是选中天的话显示为红色

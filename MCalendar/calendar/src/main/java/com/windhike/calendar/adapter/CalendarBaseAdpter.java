@@ -11,6 +11,7 @@ import java.util.List;
 public class CalendarBaseAdpter extends PagerAdapter {
     protected static final String HOLIDAY_TXT = "休";
     protected static final String WEEKDAY_TXT = "班";
+    protected static final String DAY_CHINESE_MONTH_FIRST = "初一";
     /**
      * 选中时间：xx-xx-xx
      * */
