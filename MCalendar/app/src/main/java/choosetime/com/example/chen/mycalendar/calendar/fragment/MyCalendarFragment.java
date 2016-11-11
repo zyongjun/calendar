@@ -113,7 +113,7 @@ public class MyCalendarFragment extends Fragment {
         weekCalendarAdpter = new WeekCalendarAdpter(viewss, getActivity());
         weekCalendarAdpter.setUpdateListener(updateListener);
         viewPager.setAdapter(adpter);
-        viewPager.setCurrentItem(1200, true);
+        viewPager.setCurrentItem(adpter.getCount()/2, true);
         viewpagerWeek.setAdapter(weekCalendarAdpter);
         viewpagerWeek.setCurrentItem(weekCalendarAdpter.getCount() / 2);
 

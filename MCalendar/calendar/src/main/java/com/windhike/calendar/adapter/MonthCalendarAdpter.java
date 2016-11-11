@@ -84,7 +84,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
         //距离当前时间的月数
         int month = getCount()/2 - position;
         today.add(Calendar.MONTH, -month);
-        view.setTag(today.get(Calendar.MONTH));
+        view.setTag(String.valueOf(today.get(Calendar.MONTH)));
         //找到这个月的第一天所在星期的周日
         today.add(Calendar.DAY_OF_MONTH, -(today.get(Calendar.DAY_OF_MONTH) - 1));
 
