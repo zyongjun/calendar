@@ -1,5 +1,10 @@
 package com.windhike.calendar.utils;
 
+import android.util.Log;
+
+import java.util.Calendar;
+import java.util.HashMap;
+
 /**
  * Created by Administrator on 2016/1/16 0016.
  */
@@ -37,6 +42,70 @@ public class CalendarUtil {
             "十八", "十九", "二十", "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八",
             "廿九", "三十" }; // 农历的天数
 
+    //农历部分假日
+    final static String[] lunarHoliday = new String[]{
+            "0101 春节",
+            "0115 元宵",
+            "0505 端午",
+            "0707 七夕情人",
+            "0715 中元",
+            "0815 中秋",
+            "0909 重阳",
+            "1208 腊八",
+            "1224 小年",
+            "0100 除夕"
+    };
+
+    //公历部分节假日
+    final static String[] solarHoliday = new String[]{
+            "0101 元旦",
+            "0214 情人",
+            "0308 妇女",
+            "0312 植树",
+            "0315 消费者权益日",
+            "0401 愚人",
+            "0501 劳动",
+            "0504 青年",
+            "0512 护士",
+            "0601 儿童",
+            "0701 建党",
+            "0801 建军",
+            "0808 父亲",
+            "0909 毛泽东逝世纪念",
+            "0910 教师",
+            "0928 孔子诞辰",
+            "1001 国庆",
+            "1006 老人",
+            "1024 联合国日",
+            "1112 孙中山诞辰纪念",
+            "1220 澳门回归纪念",
+            "1225 圣诞",
+            "1226 毛泽东诞辰纪念"
+    };
+    final static HashMap<String,String> lunarHolidayMap = new HashMap<>();
+    final static HashMap<String,String> solarHolidayMap = new HashMap<>();
+    static {
+        lunarHolidayMap.put("0101","春节");
+        lunarHolidayMap.put("0115","元宵");
+        lunarHolidayMap.put("0505","端午");
+        lunarHolidayMap.put("0707","七夕情人");
+//        lunarHolidayMap.put("0715","中元");
+        lunarHolidayMap.put("0815","中秋");
+        lunarHolidayMap.put("0909","重阳");
+        lunarHolidayMap.put("1208","腊八");
+        lunarHolidayMap.put("1224","小年");
+        lunarHolidayMap.put("0100","除夕");
+
+        solarHolidayMap.put("0101","元旦");
+        solarHolidayMap.put("0214","情人");
+        solarHolidayMap.put("0308","妇女");
+        solarHolidayMap.put("0401","愚人");
+        solarHolidayMap.put("0501","劳动");
+        solarHolidayMap.put("0601","儿童");
+        solarHolidayMap.put("1001","国庆");
+        solarHolidayMap.put("1225","圣诞");
+
+    }
 
     public CalendarUtil() {
         setGregorian(1901, 1, 1);
@@ -65,6 +134,28 @@ public class CalendarUtil {
 
 
         return daysOfAlmanac[cd - 1];
+    }
+
+    private static final String PATTERN_FESTIVAL_KEY = "%02d%02d";
+    public String getFestival(int y,int m,int d) {
+        setGregorian(y, m, d);
+        computeChineseFields();
+        computeSolarTerms();
+
+        int month = getChineseMonth();
+        if(month < 1 || month > 29) {
+            month = 1;
+        }
+        int day = getChineseDate();
+        String formatDay = String.format(PATTERN_FESTIVAL_KEY,month,day);
+        if (lunarHolidayMap.containsKey(formatDay)) {
+            return lunarHolidayMap.get(formatDay);
+        }
+        formatDay = String.format(PATTERN_FESTIVAL_KEY,m,d);
+        if (solarHolidayMap.containsKey(formatDay)) {
+            return solarHolidayMap.get(formatDay);
+        }
+        return null;
     }
 
 

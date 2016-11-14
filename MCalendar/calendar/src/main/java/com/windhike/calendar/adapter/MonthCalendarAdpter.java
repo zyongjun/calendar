@@ -32,7 +32,6 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
         today.setTimeInMillis(System.currentTimeMillis());
 
         strToDay = DateUtils.getTagTimeStr(today);
-
         selectTime = DateUtils.getTagTimeStr(today);
         last_msg_tv_color = ResourcesCompat.getColor(context.getResources(),R.color.last_msg_tv_color,null);
     }
@@ -102,30 +101,37 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
      * 渲染page中的view：7天
      */
     private void render(final ViewGroup view1, final Calendar today) {
+        CalendarUtil calendarUtil = new CalendarUtil();
         //一页显示一个月+7天，为42；
         for (int b = 0; b < 11; b=b+2) {
             final ViewGroup view = (ViewGroup) view1.getChildAt(b);
             for (int a = 0; a < 13; a=a+2) {
                 final int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
                 final ViewGroup dayOfWeek = (ViewGroup) view.getChildAt(a);
-                //((TextView) dayOfWeek.getChildAt(0)).setText(getStr(today.get(Calendar.DAY_OF_WEEK)));
-                ((TextView) dayOfWeek.findViewById(R.id.gongli)).setText(dayOfMonth + "");
-                String str = "";
-                try {
-                    str = new CalendarUtil().getChineseDay(today.get(Calendar.YEAR),
-                            today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
-                } catch (Exception e) {
+                ((TextView) dayOfWeek.findViewById(R.id.gongli)).setText(String.valueOf(dayOfMonth));
+                String str = EMPTY_VALUE;
+                String festival = calendarUtil.getFestival(today.get(Calendar.YEAR),today.get(Calendar.MONTH) + 1,today.get(Calendar.DAY_OF_MONTH));
+                if(festival != null){
+                    str = festival;
+                    dayOfWeek.findViewById(R.id.ll_day).setEnabled(false);
+                }else{//如果是初一，显示月份
+                    dayOfWeek.findViewById(R.id.ll_day).setEnabled(true);
+                    try {
+                        str = calendarUtil.getChineseDay(today.get(Calendar.YEAR),
+                                today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
+                    } catch (Exception e) {
 
-                }
-                if (str.equals(DAY_CHINESE_MONTH_FIRST)) {//如果是初一，显示月份
-                    str = new CalendarUtil().getChineseMonth(today.get(Calendar.YEAR),
-                            today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
+                    }
+                    //如果是初一，显示月份
+                    if(str.equals(DAY_CHINESE_MONTH_FIRST)){
+                        str = new CalendarUtil().getChineseMonth(today.get(Calendar.YEAR),
+                                today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
+                    }
                 }
                 ((TextView) dayOfWeek.findViewById(R.id.nongli)).setText(str);
                 View eventFlagView = dayOfWeek.findViewById(R.id.imv_point);
                 if (calendarEventShowTimeList.contains(DateUtils.getTagTimeStr(today))) {
                     eventFlagView.setVisibility(View.VISIBLE);
-//                    ((ImageView) dayOfWeek.findViewById(R.id.imv_point)).setImageResource(R.drawable.calendar_item_point);
                 } else {
                     eventFlagView.setVisibility(View.INVISIBLE);
                 }
@@ -154,9 +160,7 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                         if (MonthCalendarAdpter.this.os != null) {
                             os.onDateSelected((Calendar) v.getTag(R.id.tag_calendar));
                         }
-
                         selectTime = dayOfWeek.getTag().toString();
-//                        Log.e(TAG, "onClick: ---------"+selectTime, null);
                         today.add(Calendar.DATE, -42);//因为已经渲染过42天，所以today往前推42天， 代表当前page重绘；
 
                         //

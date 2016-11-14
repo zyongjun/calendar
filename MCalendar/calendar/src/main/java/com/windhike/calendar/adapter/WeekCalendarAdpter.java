@@ -89,18 +89,26 @@ public class WeekCalendarAdpter extends CalendarBaseAdpter {
         for (int a = 0; a < 13; a=a+2) {
             final int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
             final ViewGroup dayOfWeek = (ViewGroup) view.getChildAt(a);
-            ((TextView) dayOfWeek.findViewById(R.id.gongli)).setText(dayOfMonth + "");
-            String str = "";
-            try {
-                str = new CalendarUtil().getChineseDay(today.get(Calendar.YEAR),
-                        today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
-            } catch (Exception e) {
+            ((TextView) dayOfWeek.findViewById(R.id.gongli)).setText(String.valueOf(dayOfMonth));
+            String str = EMPTY_VALUE;
 
-            }
+            String festival = new CalendarUtil().getFestival(today.get(Calendar.YEAR),today.get(Calendar.MONTH) + 1,today.get(Calendar.DAY_OF_MONTH));
+            if(festival != null){
+                str = festival;
+                dayOfWeek.findViewById(R.id.ll_day).setEnabled(false);
+            }else{
+                dayOfWeek.findViewById(R.id.ll_day).setEnabled(true);
+                try {
+                    str = new CalendarUtil().getChineseDay(today.get(Calendar.YEAR),
+                            today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
+                } catch (Exception e) {
 
-            if (str.equals(DAY_CHINESE_MONTH_FIRST)) {//如果是初一，显示月份
-                str = new CalendarUtil().getChineseMonth(today.get(Calendar.YEAR),
-                        today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
+                }
+                //如果是初一，显示月份
+                if(str.equals(DAY_CHINESE_MONTH_FIRST)){
+                    str = new CalendarUtil().getChineseMonth(today.get(Calendar.YEAR),
+                            today.get(Calendar.MONTH) + 1, today.get(Calendar.DAY_OF_MONTH));
+                }
             }
             ((TextView) dayOfWeek.findViewById(R.id.nongli)).setText(str);
 

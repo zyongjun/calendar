@@ -8,10 +8,11 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/6/13 0013.
  */
-public class CalendarBaseAdpter extends PagerAdapter {
+public abstract class CalendarBaseAdpter extends PagerAdapter {
     protected static final String HOLIDAY_TXT = "休";
     protected static final String WEEKDAY_TXT = "班";
     protected static final String DAY_CHINESE_MONTH_FIRST = "初一";
+    protected static final String EMPTY_VALUE = "";
     /**
      * 选中时间：xx-xx-xx
      * */
