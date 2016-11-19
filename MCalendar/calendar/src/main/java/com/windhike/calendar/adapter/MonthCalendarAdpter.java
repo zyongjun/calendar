@@ -211,6 +211,10 @@ public class MonthCalendarAdpter extends CalendarBaseAdpter {
                     today.add(Calendar.DATE, 1);
                     continue;
                 } else {
+//                    common_day_selector
+//                    lunar_day_selector
+                    ((TextView) dayOfWeek.findViewById(R.id.gongli)).setTextColor(ResourcesCompat.getColorStateList(dayOfWeek.getResources(),R.color.common_day_selector,null));
+                    ((TextView) dayOfWeek.findViewById(R.id.nongli)).setTextColor(ResourcesCompat.getColorStateList(dayOfWeek.getResources(),R.color.lunar_day_selector,null));
                     dayOfWeek.findViewById(R.id.gongli).setActivated(false);
                     dayOfWeek.findViewById(R.id.gongli).setEnabled(true);
                     dayOfWeek.setAlpha(1.0f);
